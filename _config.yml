@@ -24,7 +24,7 @@ more_vert:
     name: Cool Option 3
     link: www.myawesomelink.com
 
-disqus: true
+disqus: false
 disqus_shortname: 'gdgmanagua'
 
 # Build settings
