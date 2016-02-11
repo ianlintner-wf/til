@@ -7,7 +7,7 @@ install:
  - npm install
 
 script: grunt build
-script: rake site:deploy --quiet
+script: rake deploy --quiet
 
 # branch whitelist, only for GitHub Pages
 branches:
