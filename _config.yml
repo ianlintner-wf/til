@@ -34,3 +34,6 @@ include:
 exclude:
   - "bower_components"
   - "bower.json"
+  - "Gruntfile.coffee"
+  - "Rakefile"
+  - "package.json"
