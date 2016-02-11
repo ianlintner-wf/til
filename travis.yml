@@ -1,0 +1,15 @@
+language: ruby
+rvm:
+- 2.1
+
+install:
+ - bundle install
+ - npm install
+
+script: grunt build
+script: rake site:deploy --quiet
+
+# branch whitelist, only for GitHub Pages
+branches:
+  only:
+  - master     # test the gh-pages branch

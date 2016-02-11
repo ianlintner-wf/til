@@ -38,3 +38,4 @@ exclude:
   - "Rakefile"
   - "package.json"
   - "node_modules"
+  - [vendor]
