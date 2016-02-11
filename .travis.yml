@@ -7,7 +7,12 @@ install:
  - npm install
 
 
-script: cd "$TRAVIS_BUILD_DIR" && mkdir _site && git clone -q https://ianlintner-wf:$GITHUB_API_KEY@github.com/ianlintner-wf/til.git -b gh-pages _site
+script: |
+  cd "$TRAVIS_BUILD_DIR"
+  mkdir -p _site
+  git clone -q https://ianlintner-wf:$GITHUB_API_KEY@github.com/ianlintner-wf/til.git -b gh-pages _site
+  echo '_site directory created'
+  echo 'preparing to build _site...'
 script: grunt build
 
 after_success: |
