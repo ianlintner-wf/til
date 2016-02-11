@@ -39,3 +39,4 @@ exclude:
   - "package.json"
   - "node_modules"
   - [vendor]
+  - travis.yml
