@@ -24,7 +24,8 @@ after_success: |
 
     echo 'setting git user as travis'
     git config user.email "travis@travis-ci.org"
-    git config --global user.name "travis"
+    git config user.name "travis"
+    git config push.default matching
 
     echo 'attempting run rake deploy...'
     cd "$TRAVIS_BUILD_DIR"
