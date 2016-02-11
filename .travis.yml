@@ -20,7 +20,14 @@ script: grunt build
 after_success: |
   if [ -n "$GITHUB_API_KEY" ]; then
     cd "$TRAVIS_BUILD_DIR"
+    cd _site
+
+    echo 'setting git user as travis'
+    git config user.email "travis@travis-ci.org"
+    git config --global user.name "travis"
+
     echo 'attempting run rake deploy...'
+    cd "$TRAVIS_BUILD_DIR"
     rake deploy
   fi
 
