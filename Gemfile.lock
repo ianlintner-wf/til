@@ -130,6 +130,3 @@ PLATFORMS
 DEPENDENCIES
   github-pages
   jekyll-tagging
-
-BUNDLED WITH
-   1.11.2
