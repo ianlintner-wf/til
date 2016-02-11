@@ -20,6 +20,7 @@ script: grunt build
 after_success: |
   if [ -n "$GITHUB_API_KEY" ]; then
     cd "$TRAVIS_BUILD_DIR"
+    echo 'attempting run rake deploy...'
     rake deploy
   fi
 
