@@ -6,24 +6,25 @@ install:
  - bundle install
  - npm install
 
+
+script: cd "$TRAVIS_BUILD_DIR" && mkdir _site && git clone -q https://ianlintner-wf:$GITHUB_API_KEY@github.com/ianlintner-wf/til.git -b gh-pages _sites
 script: grunt build
+
 
 after_success: |
   if [ -n "$GITHUB_API_KEY" ]; then
     cd "$TRAVIS_BUILD_DIR"
     # This generates a `web` directory containing the website.
     cd _site
-    git init
-    git checkout -b gh-pages
     git add -A
-    git -c user.name='travis' -c user.email='travis' commit -m init
+    git -c user.name='travis' -c user.email='travis' commit -m 'automated build'
 
-    git remote rm origin
-    git remote add origin https://ianlintner-wf:$GITHUB_API_KEY@github.com/ianlintner-wf/til.git
+    git remote add ghub https://ianlintner-wf:$GITHUB_API_KEY@github.com/ianlintner-wf/til.git
 
     # Make sure to make the output quiet, or else the API token will leak!
     # This works because the API key can replace your password.
-    git push -f -q origin &2>/dev/null
+    git push -f -q ghub &2>/dev/null
+    echo 'git push complete'
     cd "$TRAVIS_BUILD_DIR"
   fi
 
