@@ -7,9 +7,24 @@ install:
  - npm install
 
 script: grunt build
-script: rake deploy --quiet
+
+after_success: |
+  if [ -n "$GITHUB_API_KEY" ]; then
+    cd "$TRAVIS_BUILD_DIR"
+    # This generates a `web` directory containing the website.
+    cd _site
+    git init
+    git checkout -b gh-pages
+    git add -A
+    git -c user.name='travis' -c user.email='travis' commit -m init
+    # Make sure to make the output quiet, or else the API token will leak!
+    # This works because the API key can replace your password.
+    git push -f -q https://ianlintner-wf:$GITHUB_API_KEY@github.com/ianlintner-wf/til-gh-pages gh-pages &2>/dev/null
+    cd "$TRAVIS_BUILD_DIR"
+  fi
 
 # branch whitelist, only for GitHub Pages
 branches:
   only:
   - master     # test the gh-pages branch
+
