@@ -12,9 +12,10 @@
 // Cards styles
 .mdl-card {
   .mdl-card__title {
-    color: #fff;
-    height: 176px;
-    background: url('../img/welcome_card.jpg') center / cover;
+    color: #000;
+    //height: 176px;
+    //background: url('../img/welcome_card.jpg') center / cover;
+    background: none !important;
   }
 
   .mdl-card__supporting-text > span { color: #9F9F9F; }

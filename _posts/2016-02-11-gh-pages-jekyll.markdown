@@ -1,10 +1,10 @@
 ---
 layout: post
 title:  "Welcome to Jekyll!"
-date:   2015-07-11 11:34:20
+date:   2016-02-11 11:34:20
 categories: jekyll
-author: Google Developers Group Managua
-image: https://raw.githubusercontent.com/jekyll/brand/master/jekyll-logo-light-transparent.png
+author: Ian Lintner
+
 ---
 This is my first TIL post to my new page of my Today I learned site. The basic intent is to share things I have learned
 to do. Mostly technology based.
