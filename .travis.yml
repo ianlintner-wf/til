@@ -6,8 +6,6 @@ install:
  - bundle install
  - npm install
 
-
-script:
 script: |
   cd "$TRAVIS_BUILD_DIR"
   mkdir -p _site
