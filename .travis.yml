@@ -7,28 +7,20 @@ install:
  - npm install
 
 before_script: |
-  cd "$TRAVIS_BUILD_DIR"
-  mkdir -p _site
-  git clone -q https://ianlintner-wf:$GITHUB_API_KEY@github.com/ianlintner-wf/til.git -b gh-pages _site
-  echo '_site directory created'
-  echo 'preparing to build _site...'
+  if [ -n "$GITHUB_API_KEY" ]; then
+    cd "$TRAVIS_BUILD_DIR"
+    mkdir -p _site
+    git clone -q https://ianlintner-wf:$GITHUB_API_KEY@github.com/ianlintner-wf/til.git -b gh-pages _site
+    echo '_site directory created'
+    echo 'preparing to build _site...'
+  fi
 
 script: grunt build
 
 after_success: |
   if [ -n "$GITHUB_API_KEY" ]; then
     cd "$TRAVIS_BUILD_DIR"
-    cd _site
-    git add -A .
-    git -c user.name='travis' -c user.email='travis' commit -m 'automated build'
-
-    git remote add ghub https://ianlintner-wf:$GITHUB_API_KEY@github.com/ianlintner-wf/til.git
-
-    # Make sure to make the output quiet, or else the API token will leak!
-    # This works because the API key can replace your password.
-    git push -f -q ghub gh-pages &2>/dev/null
-    echo 'git push complete'
-    cd "$TRAVIS_BUILD_DIR"
+    rake deploy
   fi
 
 # branch whitelist, only for GitHub Pages
