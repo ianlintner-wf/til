@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>About</title>
+  <meta name="description" content="This is the TIL site for Ian Lintner [https://github.com/ianlintner]
+">
+
+  <link rel="canonical" href="http://yourdomain.com/about/">
+  <link rel="alternate" type="application/rss+xml" title="TIL for Ian Lintner" href="http://yourdomain.com/feed.xml" />
+
+  <!-- Material Design Lite css Library -->
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.1/material.brown-orange.min.css" />
+  
+  <!-- Material Design Fonts -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <!-- Custom theme css -->
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+
+
+  <body>
+
+    <!-- Start Layout -->
+    
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <!-- search layout -->
+<div class="super-search" id="js-search">
+  <ul class="super-search__results" id="js-search__results"></ul>        
+  <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored super-search__close-btn" onclick="superSearch.toggle()">
+    <i class="material-icons">close</i>
+  </button>
+</div>
+<!-- /end search -->
+        <header class="mdl-layout__header">
+
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <span class="mdl-layout-title">
+        <a href="/">TIL for Ian Lintner</a>
+      </span>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer"></div>
+      
+
+
+
+      <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="menu-lower-left">
+        
+        <li><a href="www.myawesomelink.com" class="mdl-menu__item">Cool Option 1</a></li>
+        
+      </ul>
+    </div>
+  </header>
+
+  <div class="mdl-layout__drawer">
+    <span class="mdl-layout-title">Menu</span>
+    <nav class="mdl-navigation">
+    
+      
+      <a class="mdl-navigation__link" href="/about/">About</a>
+      
+    
+      
+    
+      
+      <a class="mdl-navigation__link" href="/">home</a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    </nav>
+
+  </div>
+
+
+    
+
+    <div class="post-ribbon"></div>
+<main class="post-main mdl-layout__content">
+  <div class="post-container mdl-grid">
+    <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+    <div class="post-section mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
+      <div class="mdl-color-text--grey-500">
+      
+      </div>
+      <h3>About</h3>
+      <article class="post-content">
+        <p><h6 id="a-jekyll-theme-based-in-google-material-design-lite-library">A Jekyll theme based in Google Material Design Lite library.</h6>
+
+<p>This is the base Jekyll Material Design Lite theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at <a href="http://jekyllrb.com/">jekyllrb.com</a></p>
+
+<p>You can find the source code for the Jekyll MDL theme at: <a href="https://github.com/gdg-managua/jekyll-mdl">github.com/gdg-managua/jekyll-mdl</a></p>
+
+<p>You can find the source code for Jekyll at <a href="https://github.com/jekyll/jekyll">github.com/jekyll/jekyll</a></p>
+
+<h6 id="sites-using-jekyll-mdl">Sites using jekyll-mdl</h6>
+
+<p>If you are using this cool jekyll theme, please open an issue or fork the project, add your site to the list and send a pull request, we will be happy to know where the theme are using.</p>
+
+<p><a href="http://fandekasp.github.io/">fandekasp.github.io</a></p>
+
+<h6 id="custom-themes">Custom Themes</h6>
+
+<p>If you don’t want the default site colors, you can create custom themes for the site in the <a href="http://www.getmdl.io/customize/index.html">mdl theme creator</a>. The site will create a custom css, something like this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> &lt;link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.teal-green.min.css" /&gt;
+</code></pre>
+</div>
+
+<p>Now add this in the _includes/head.html file, under the main css and enjoy your new theme.</p>
+
+<h6 id="post-options">Post Options</h6>
+
+<p>All the post, require an image and maybe an author, the image are used in the cards and the autor used for the footer in the cards. For use the images and author, just add a new key in the post config, something like this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>---
+layout: post
+title:  "Welcome to jekyll-mdl"
+date:   2015-07-11 11:34:20
+categories: jekyll
+image: http://www.wchs4pets.org/wp-content/uploads/2015/03/cat_1-jpg.jpg
+author: Google Developers Group Managua
+---
+</code></pre>
+</div>
+
+<h6 id="layout-configuration">Layout Configuration</h6>
+<p>You can setup 4 types of layout</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- Fixed Nav + Simple Card Grid
+- Fixed Nav + Highlight Post + Card Grid
+- Drawer Nav + Simple Card Grid
+- Drawer Nav + Highlight Post + Card Grid
+</code></pre>
+</div>
+
+<p>For use this in the <a href="https://github.com/gdg-managua/jekyll-mdl/blob/master/_config.yml">_config.yml</a> select the type of layout, rebuild the website and voilà :smile:</p>
+
+<h6 id="contributing">Contributing</h6>
+<p>If you want to contribute to this project, please read the <a href="https://github.com/gdg-managua/jekyll-mdl/blob/master/CONTRIBUTING.md">CONTRIBUTING</a> file and perform the following steps</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># Fork this repository
+# Clone your fork
+jekyll serve --watch
+
+git checkout -b feature_branch
+# Implement your feature and tests
+git add . &amp;&amp; git commit
+git push -u origin feature_branch
+# Send a pull request for your feature branch
+</code></pre>
+</div>
+
+<h6 id="license">License</h6>
+<p>Licensed under the Apache 2.0 license.</p>
+
+<p>See the <a href="https://github.com/gdg-managua/jekyll-mdl/blob/master/LICENSE.md">LICENSE</a> file for more details.</p>
+
+<p>Copyright © 2015 <a href="http://www.gdgmanagua.org">Google Developers Group Managua</a>.</p>
+</p>
+      </article>
+      
+    </div>
+  </div>
+</main>
+
+    <footer class="mdl-mega-footer">
+  <div class="mdl-mega-footer--middle-section">
+    <div id="tag-cloud">
+      <a href="/tag/docker.html" class="set-5">docker</a> <a href="/tag/docker-machine.html" class="set-5">docker-machine</a> <a href="/tag/github.html" class="set-5">github</a> <a href="/tag/github-pages.html" class="set-5">github-pages</a> <a href="/tag/jekyll.html" class="set-5">jekyll</a>
+    </div>
+    <div class="mdl-mega-footer--drop-down-section">
+      <input class="mdl-mega-footer--heading-checkbox" type="checkbox" checked>
+      <h1 class="mdl-mega-footer--heading">INFO</h1>
+      <ul class="mdl-mega-footer--link-list">
+        <li><a href="mailto:lintner.ian@gmail.com">lintner.ian@gmail.com</a></li>
+        <li><a href="/feed.xml">subscribe via RSS</a></li>
+      </ul>
+    </div>
+
+    <div class="mdl-mega-footer--drop-down-section">
+      <input class="mdl-mega-footer--heading-checkbox" type="checkbox" checked>
+      <h1 class="mdl-mega-footer--heading">SOCIAL</h1>
+      <ul class="mdl-mega-footer--link-list">
+        
+        <li>
+          <a href="https://github.com/ianlintner-wf">
+            <span class="icon  icon--github">
+              <svg viewBox="0 0 16 16">
+                <path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+              </svg>
+            </span>
+
+            <span class="username">ianlintner-wf</span>
+          </a>
+        </li>
+        
+        
+	  
+      
+	  
+	  
+      </ul>
+    </div>
+
+    <div class="mdl-mega-footer--drop-down-section">
+      <input class="mdl-mega-footer--heading-checkbox" type="checkbox" checked>
+      <h1 class="mdl-mega-footer--heading">ABOUT</h1>
+      <ul class="mdl-mega-footer--link-list">
+        <li>This is the TIL site for Ian Lintner [https://github.com/ianlintner]
+</li>
+      </ul>
+    </div>
+
+
+  </div>
+
+  <div class="mdl-mega-footer--bottom-section">
+    <div class="mdl-logo">TIL for Ian Lintner</div>
+    <ul class="mdl-mega-footer--link-list">
+      <li><a href="#">Help</a></li>
+      <li><a href="#">Privacy & Terms</a></li>
+    </ul>
+  </div>
+
+</footer>
+
+
+    </div>
+    <!-- /End Layout -->
+
+    <!-- Material Design Lite js Library -->
+      <link rel="stylesheet" href="https://code.getmdl.io/1.1.1/material.brown-orange.min.css" />
+    
+    <script rel="javascript" type="text/javascript" src="/js/search.js"></script>
+
+  </body>
+
+</html>
