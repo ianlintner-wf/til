@@ -2,7 +2,11 @@
 layout: post
 title:  "Docker-Machine NFS Share Permissions on Mac OSX"
 date:   2016-02-11 09:00:20
-categories: docker docker-machine
+categories:
+  - docker
+tag: 
+ - docker-machine
+ - docker
 author: Ian Lintner
 
 ---

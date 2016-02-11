@@ -7,14 +7,15 @@ baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://yourdomain.com" # the base hostname & protocol for your site
 github_username:  ianlintner-wf
 
+tag_page_layout: tag_page
+tag_page_dir: tag
 
 # Layout settings
 header_type: default  # values [ drawer, default ]
 post_type: highlight    # values [ highlight, default ]
 pagination_type: default  # values [ ops, default ]
 
-tag_page_layout: tag_page
-tag_page_dir: tag
+
 
 more_vert:
   option1:
