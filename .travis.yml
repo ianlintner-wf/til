@@ -23,7 +23,7 @@ after_success: |
 
     # Make sure to make the output quiet, or else the API token will leak!
     # This works because the API key can replace your password.
-    git push -f -q gh-pages &2>/dev/null
+    git push -f -q origin &2>/dev/null
     cd "$TRAVIS_BUILD_DIR"
   fi
 
