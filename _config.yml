@@ -27,3 +27,6 @@ disqus_shortname: 'gdgmanagua'
 
 # Build settings
 markdown: kramdown
+
+include:
+  - .nojekyll
