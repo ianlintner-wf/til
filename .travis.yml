@@ -14,7 +14,7 @@ after_success: |
   if [ -n "$GITHUB_API_KEY" ]; then
     cd "$TRAVIS_BUILD_DIR"
     cd _site
-    git add -A
+    git add -A .
     git -c user.name='travis' -c user.email='travis' commit -m 'automated build'
 
     git remote add ghub https://ianlintner-wf:$GITHUB_API_KEY@github.com/ianlintner-wf/til.git
