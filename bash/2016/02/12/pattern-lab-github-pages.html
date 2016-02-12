@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Print Bash History for Use with Blogs</title>
-  <meta name="description" content="Print history of bash commands. Useful for creating blogs or sharing.bashhistory | cut -c 8-">
+  <meta name="description" content="bashgit clone git@github.com:ianlintner-wf/patternlab-php.git patternlab-gh-pagescd patternlab-gh-pagescd core/scripts/php core/builder.php -gphp core/builde...">
 
-  <link rel="canonical" href="http://yourdomain.com/bash/2016/02/12/bash-history-for-blog.html">
+  <link rel="canonical" href="http://yourdomain.com/bash/2016/02/12/pattern-lab-github-pages.html">
   <link rel="alternate" type="application/rss+xml" title="TIL for Ian Lintner" href="http://yourdomain.com/feed.xml" />
 
   <!-- Material Design Lite css Library -->
@@ -106,14 +106,26 @@
       </div>
       <h3>Print Bash History for Use with Blogs</h3>
       <article class="post-content">
-        <p><p>Print history of bash commands. Useful for creating blogs or sharing.
-<code class="highlighter-rouge">bash
-history | cut -c 8-
+        <p><p><code class="highlighter-rouge">bash
+git clone git@github.com:ianlintner-wf/patternlab-php.git patternlab-gh-pages
+cd patternlab-gh-pages
+cd core/scripts/
+php core/builder.php -g
+php core/builder.php -g
+git checkout --orphan gh-pages
+git reset .
+rm -r *
+echo 'Coming soon' &gt; index.html
+git add index.html
+git commit -m "init"
+git push -u origin gh-pages
 </code></p>
 </p>
         
           
             <a href="/tag/bash.html">bash</a>
+          
+            <a href="/tag/patternlab.html">patternlab</a>
           
         
       </article>
