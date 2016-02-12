@@ -23,7 +23,7 @@ after_success: |
     cd _site
 
     echo 'setting git user as travis'
-    git config user.email "travis@travis-ci.org"
+    git config user.email "contact@travis-ci.org"
     git config user.name "travis"
     git config push.default matching
 
