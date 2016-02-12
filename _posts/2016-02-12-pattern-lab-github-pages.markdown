@@ -1,0 +1,26 @@
+---
+published: true
+title:  "Print Bash History for Use with Blogs"
+layout: post
+date: 2016-02-12T11:48:00.000Z
+categories: bash
+tag: 
+  - bash
+  - patternlab
+author: Ian Lintner
+---
+
+```bash
+git clone git@github.com:ianlintner-wf/patternlab-php.git patternlab-gh-pages
+cd patternlab-gh-pages
+cd core/scripts/
+php core/builder.php -g
+php core/builder.php -g
+git checkout --orphan gh-pages
+git reset .
+rm -r *
+echo 'Coming soon' > index.html
+git add index.html
+git commit -m "init"
+git push -u origin gh-pages
+```
