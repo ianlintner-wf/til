@@ -6,10 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Welcome to Jekyll!</title>
-  <meta name="description" content="This is my first TIL post to my new page of my Today I learned site. The basic intent is to share things I have learnedto do. Mostly technology based.">
+  <title>Print Bash History for Use with Blogs</title>
+  <meta name="description" content="Print history of bash commands. Useful for creating blogs or sharing.bashhistory | cut -c 8-">
 
-  <link rel="canonical" href="http://yourdomain.com/jekyll/2016/02/11/gh-pages-jekyll.html">
+  <link rel="canonical" href="http://yourdomain.com/bash/2016/02/12/bash-history-for-blog.html">
   <link rel="alternate" type="application/rss+xml" title="TIL for Ian Lintner" href="http://yourdomain.com/feed.xml" />
 
   <!-- Material Design Lite css Library -->
@@ -100,38 +100,18 @@
     <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
     <div class="post-section mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
       <div class="mdl-color-text--grey-500">
-      Feb 11, 2016 • Ian Lintner
+      Feb 12, 2016 • Ian Lintner
       </div>
-      <h3>Welcome to Jekyll!</h3>
+      <h3>Print Bash History for Use with Blogs</h3>
       <article class="post-content">
-        <p><p>This is my first TIL post to my new page of my Today I learned site. The basic intent is to share things I have learned
-to do. Mostly technology based.</p>
-
-<p>First to create a github pages using Jekyll you have to install the Jekyll gem in Ruby. Then create gemfile.</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">gem install jekyll -g
-
-github checkout -b gh-pages
-vi Gemfile</code></pre></figure>
-
-<p>Add these to your gem file</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">source</span> <span class="s1">'https://rubygems.org'</span>
-
-gem <span class="s1">'github-pages'</span></code></pre></figure>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">bundle install
-
-<span class="c">#To start your site on http://127.0.0.1:4000</span>
-jekyll serve .</code></pre></figure>
+        <p><p>Print history of bash commands. Useful for creating blogs or sharing.
+<code class="highlighter-rouge">bash
+history | cut -c 8-
+</code></p>
 </p>
         
           
-            <a href="/tag/github-pages.html">github-pages</a>
-          
-            <a href="/tag/github.html">github</a>
-          
-            <a href="/tag/jekyll.html">jekyll</a>
+            <a href="/tag/bash.html">bash</a>
           
         
       </article>
