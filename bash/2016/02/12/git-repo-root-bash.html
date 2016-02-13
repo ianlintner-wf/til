@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Get the root of git repo</title>
-  <meta name="description" content="bashcd $(git rev-parse --show-cdup)">
+  <meta name="description" content="cd $(git rev-parse --show-cdup)">
 
   <link rel="canonical" href="http://yourdomain.com/bash/2016/02/12/git-repo-root-bash.html">
   <link rel="alternate" type="application/rss+xml" title="TIL for Ian Lintner" href="http://yourdomain.com/feed.xml" />
@@ -106,13 +106,13 @@
       </div>
       <h3>Get the root of git repo</h3>
       <article class="post-content">
-        <p><p><code class="highlighter-rouge">bash
-cd $(git rev-parse --show-cdup)
-</code></p>
+        <p><div class="highlighter-rouge"><pre class="highlight"><code><span class="nb">cd</span> <span class="k">$(</span>git rev-parse --show-cdup<span class="k">)</span>
+</code></pre>
+</div>
 
-<p><code class="highlighter-rouge">bash
-alias git-root='cd $(git rev-parse --show-cdup)'
-</code></p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nb">alias </span>git-root<span class="o">=</span><span class="s1">'cd $(git rev-parse --show-cdup)'</span>
+</code></pre>
+</div>
 </p>
         
           

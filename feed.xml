@@ -6,26 +6,38 @@
 </description>
     <link>http://yourdomain.com/</link>
     <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 12 Feb 2016 19:30:16 +0000</pubDate>
-    <lastBuildDate>Fri, 12 Feb 2016 19:30:16 +0000</lastBuildDate>
+    <pubDate>Sat, 13 Feb 2016 02:21:25 +0000</pubDate>
+    <lastBuildDate>Sat, 13 Feb 2016 02:21:25 +0000</lastBuildDate>
     <generator>Jekyll v3.0.3</generator>
     
       <item>
         <title>Print Bash History for Use with Blogs</title>
-        <description>&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;bash
-git clone git@github.com:ianlintner-wf/patternlab-php.git patternlab-gh-pages
-cd patternlab-gh-pages
-cd core/scripts/
+        <description>&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone git@github.com:youruser/yourrepo.git patternlab-gh-pages
+&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;patternlab-gh-pages
+&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;core/scripts/
 php core/builder.php -g
 php core/builder.php -g
 git checkout --orphan gh-pages
 git reset .
-rm -r *
-echo &#39;Coming soon&#39; &amp;gt; index.html
+rm -r &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;Coming soon&#39;&lt;/span&gt; &amp;gt; index.html
 git add index.html
-git commit -m &quot;init&quot;
+git commit -m &lt;span class=&quot;s2&quot;&gt;&quot;init&quot;&lt;/span&gt;
 git push -u origin gh-pages
-&lt;/code&gt;&lt;/p&gt;
+git ..
+git co master
+git reset .
+git rm -rf public/&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
+git commit -a -m &lt;span class=&quot;s1&quot;&gt;&#39;removed all files in public on master&#39;&lt;/span&gt;
+git push
+git clone git@github.com:youruser/yourrepo.git -b gh-pages public
+php core/builder.php -g
+&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;public
+git add -A .
+git commit -a -m &lt;span class=&quot;s1&quot;&gt;&#39;generated site&#39;&lt;/span&gt;
+git push
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 </description>
         <pubDate>Fri, 12 Feb 2016 11:48:00 +0000</pubDate>
         <link>http://yourdomain.com/bash/2016/02/12/pattern-lab-github-pages.html</link>
@@ -42,7 +54,7 @@ git push -u origin gh-pages
     
       <item>
         <title>Print Bash History for Use with Blogs</title>
-        <description>&lt;p&gt;Print history of bash commands. Useful for creating blogs or sharing.
+        <description>&lt;p&gt;Print history of bash commands. Useful for creating blogs or sharing.&lt;br /&gt;
 &lt;code class=&quot;highlighter-rouge&quot;&gt;bash
 history | cut -c 8-
 &lt;/code&gt;&lt;/p&gt;
@@ -60,13 +72,13 @@ history | cut -c 8-
     
       <item>
         <title>Get the root of git repo</title>
-        <description>&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;bash
-cd $(git rev-parse --show-cdup)
-&lt;/code&gt;&lt;/p&gt;
+        <description>&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;git rev-parse --show-cdup&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;bash
-alias git-root=&#39;cd $(git rev-parse --show-cdup)&#39;
-&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;alias &lt;/span&gt;git-root&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;cd $(git rev-parse --show-cdup)&#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 </description>
         <pubDate>Fri, 12 Feb 2016 09:31:00 +0000</pubDate>
         <link>http://yourdomain.com/bash/2016/02/12/git-repo-root-bash.html</link>
@@ -106,7 +118,7 @@ alias git-root=&#39;cd $(git rev-parse --show-cdup)&#39;
     
       <item>
         <title>Welcome to Jekyll!</title>
-        <description>&lt;p&gt;This is my first TIL post to my new page of my Today I learned site. The basic intent is to share things I have learned
+        <description>&lt;p&gt;This is my first TIL post to my new page of my Today I learned site. The basic intent is to share things I have learned&lt;br /&gt;
 to do. Mostly technology based.&lt;/p&gt;
 
 &lt;p&gt;First to create a github pages using Jekyll you have to install the Jekyll gem in Ruby. Then create gemfile.&lt;/p&gt;
@@ -144,7 +156,7 @@ jekyll serve .&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
     
       <item>
         <title>Docker-Machine NFS Share Permissions on Mac OSX</title>
-        <description>&lt;p&gt;If you set up a Docker Machine on virtual box one of the things that can fix some of the pressures if you choose
+        <description>&lt;p&gt;If you set up a Docker Machine on virtual box one of the things that can fix some of the pressures if you choose&lt;br /&gt;
 to share your files via NFS is to confirm that the docker-machine has access to the files as your user&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;#To see your exports&lt;/span&gt;
@@ -161,7 +173,7 @@ id -g &lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;Update your /etc/hosts to look like this&lt;/p&gt;
 
-&lt;p&gt;501 will be your UID
+&lt;p&gt;501 will be your UID&lt;br /&gt;
 20 is your GID&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/Users&quot;&lt;/span&gt; 192.168.99.100 -alldirs -mapall&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;501:20&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;

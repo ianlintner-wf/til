@@ -110,20 +110,32 @@
       </div>
       <div class="mdl-card__supporting-text">
         <span>Feb 12, 2016</span>
-        <p><p><code class="highlighter-rouge">bash
-git clone git@github.com:ianlintner-wf/patternlab-php.git patternlab-gh-pages
-cd patternlab-gh-pages
-cd core/scripts/
+        <p><div class="highlighter-rouge"><pre class="highlight"><code>git clone git@github.com:youruser/yourrepo.git patternlab-gh-pages
+<span class="nb">cd </span>patternlab-gh-pages
+<span class="nb">cd </span>core/scripts/
 php core/builder.php -g
 php core/builder.php -g
 git checkout --orphan gh-pages
 git reset .
-rm -r *
-echo 'Coming soon' &gt; index.html
+rm -r <span class="k">*</span>
+<span class="nb">echo</span> <span class="s1">'Coming soon'</span> &gt; index.html
 git add index.html
-git commit -m "init"
+git commit -m <span class="s2">"init"</span>
 git push -u origin gh-pages
-</code></p>
+git ..
+git co master
+git reset .
+git rm -rf public/<span class="k">*</span>
+git commit -a -m <span class="s1">'removed all files in public on master'</span>
+git push
+git clone git@github.com:youruser/yourrepo.git -b gh-pages public
+php core/builder.php -g
+<span class="nb">cd </span>public
+git add -A .
+git commit -a -m <span class="s1">'generated site'</span>
+git push
+</code></pre>
+</div>
 </p>
       </div>
       <div class="mdl-card__actions mdl-card--border">
@@ -150,7 +162,7 @@ git push -u origin gh-pages
       </div>
       <div class="mdl-card__supporting-text">
         <span>Feb 12, 2016</span>
-        <p><p>Print history of bash commands. Useful for creating blogs or sharing.
+        <p><p>Print history of bash commands. Useful for creating blogs or sharing.<br />
 <code class="highlighter-rouge">bash
 history | cut -c 8-
 </code></p>
@@ -180,9 +192,9 @@ history | cut -c 8-
       </div>
       <div class="mdl-card__supporting-text">
         <span>Feb 12, 2016</span>
-        <p><p><code class="highlighter-rouge">bash
-cd $(git rev-parse --show-cdup)
-</code></p>
+        <p><div class="highlighter-rouge"><pre class="highlight"><code><span class="nb">cd</span> <span class="k">$(</span>git rev-parse --show-cdup<span class="k">)</span>
+</code></pre>
+</div>
 
 </p>
       </div>
@@ -238,7 +250,7 @@ cd $(git rev-parse --show-cdup)
       </div>
       <div class="mdl-card__supporting-text">
         <span>Feb 11, 2016</span>
-        <p><p>This is my first TIL post to my new page of my Today I learned site. The basic intent is to share things I have learned
+        <p><p>This is my first TIL post to my new page of my Today I learned site. The basic intent is to share things I have learned<br />
 to do. Mostly technology based.</p>
 
 </p>
@@ -267,7 +279,7 @@ to do. Mostly technology based.</p>
       </div>
       <div class="mdl-card__supporting-text">
         <span>Feb 11, 2016</span>
-        <p><p>If you set up a Docker Machine on virtual box one of the things that can fix some of the pressures if you choose
+        <p><p>If you set up a Docker Machine on virtual box one of the things that can fix some of the pressures if you choose<br />
 to share your files via NFS is to confirm that the docker-machine has access to the files as your user</p>
 
 </p>

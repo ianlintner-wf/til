@@ -106,7 +106,7 @@
       </div>
       <h3>Docker-Machine NFS Share Permissions on Mac OSX</h3>
       <article class="post-content">
-        <p><p>If you set up a Docker Machine on virtual box one of the things that can fix some of the pressures if you choose
+        <p><p>If you set up a Docker Machine on virtual box one of the things that can fix some of the pressures if you choose<br />
 to share your files via NFS is to confirm that the docker-machine has access to the files as your user</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c">#To see your exports</span>
@@ -123,7 +123,7 @@ id -g </code></pre></figure>
 
 <p>Update your /etc/hosts to look like this</p>
 
-<p>501 will be your UID
+<p>501 will be your UID<br />
 20 is your GID</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="s2">"/Users"</span> 192.168.99.100 -alldirs -mapall<span class="o">=</span>501:20</code></pre></figure>
