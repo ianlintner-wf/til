@@ -28,6 +28,11 @@ disqus_shortname: 'gdgmanagua'
 # Build settings
 markdown: kramdown
 
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+
 include:
   - .nojekyll
 
