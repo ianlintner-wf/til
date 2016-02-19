@@ -3,15 +3,22 @@ layout: post
 title: Refreshing Local Dev Mysql From Production Via Scp.
 date: 2016-02-19 17:25:27
 categories: 
-- mysql docker bash
+- mysql 
+- docker 
+- bash
 tags: 
-- bash mysql docker devops automation acquia
+- bash
+- mysql 
+- docker 
+- devops
+- automation
+- acquia
 ---
 
 This is a set of scripts I am calling gantry. These are just quick one off scripts. I plan on making these configurable
 with env and/or config files but they do the job. 
 
-This is based on local docker development enviornment and getting the database dumps from fixed location e.g. acquia.
+This is based on local docker development env and getting the database dumps from fixed location e.g. acquia.
 
 This is project I am nick naming gantry as in gantry crane
 
