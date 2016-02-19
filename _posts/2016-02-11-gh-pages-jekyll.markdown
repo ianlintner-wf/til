@@ -14,28 +14,28 @@ This is my first TIL post to my new page of my Today I learned site. The basic i
 to do. Mostly technology based.
 
 First to create a github pages using Jekyll you have to install the Jekyll gem in Ruby. Then create gemfile.
-{% highlight bash %}
+```bash
 
 gem install jekyll -g
 
 github checkout -b gh-pages
 vi Gemfile
 
-{% endhighlight %}
+```
 
 Add these to your gem file
 
-{% highlight bash %}
+```bash
 source 'https://rubygems.org'
 
 gem 'github-pages'
-{% endhighlight %}
+```
 
-{% highlight bash %}
+```bash
 
 bundle install
 
 #To start your site on http://127.0.0.1:4000
 jekyll serve .
 
-{% endhighlight %}
+```

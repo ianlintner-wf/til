@@ -1,0 +1,24 @@
+---
+published: true
+title:  "php test"
+layout: experiment
+date: 2016-02-12T11:48:00.000Z
+categories: php
+tag: 
+  - bash
+  - patternlab
+author: Ian Lintner
+---
+
+```php
+<?php 
+
+if($then > 0) {
+  echo 'do someething';
+  echo "something else";
+  foreach($somethins as $thin) {
+    do_thing($thin);
+  }
+}
+
+```
