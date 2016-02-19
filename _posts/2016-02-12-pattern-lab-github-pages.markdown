@@ -1,6 +1,6 @@
 ---
 published: true
-title:  "Print Bash History for Use with Blogs"
+title:  "Pattern lab for use with github pages"
 layout: post
 date: 2016-02-12T11:48:00.000Z
 categories: bash
