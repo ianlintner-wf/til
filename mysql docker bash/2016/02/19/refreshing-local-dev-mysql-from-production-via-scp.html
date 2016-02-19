@@ -6,10 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Get the root of git repo</title>
-  <meta name="description" content="cd $(git rev-parse --show-cdup)">
+  <title>Refreshing Local Dev Mysql From Production Via Scp.</title>
+  <meta name="description" content="This is a set of scripts I am calling gantry. These are just quick one off scripts. I plan on making these configurablewith env and/or config files but they ...">
 
-  <link rel="canonical" href="http://yourdomain.com/bash/2016/02/12/git-repo-root-bash.html">
+  <link rel="canonical" href="http://yourdomain.com/mysql%20docker%20bash/2016/02/19/refreshing-local-dev-mysql-from-production-via-scp.html">
   <link rel="alternate" type="application/rss+xml" title="TIL for Ian Lintner" href="http://yourdomain.com/feed.xml" />
 
   <!-- Material Design Lite css Library -->
@@ -107,24 +107,90 @@
     <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
     <div class="post-section mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
       <div class="mdl-color-text--grey-500">
-      Feb 12, 2016 • Ian Lintner
+      Feb 19, 2016
       </div>
-      <h3>Get the root of git repo</h3>
+      <h3>Refreshing Local Dev Mysql From Production Via Scp.</h3>
       <article class="post-content">
-        <p><div class="highlighter-rouge"><pre class="highlight"><code><span class="nb">cd</span> <span class="k">$(</span>git rev-parse --show-cdup<span class="k">)</span>
+        <p><p>This is a set of scripts I am calling gantry. These are just quick one off scripts. I plan on making these configurable<br />
+with env and/or config files but they do the job.</p>
+
+<p>This is based on local docker development enviornment and getting the database dumps from fixed location e.g. acquia.</p>
+
+<p>This is project I am nick naming gantry as in gantry crane</p>
+
+<h2 id="gantrysh">gantry.sh</h2>
+<p>Gets gets the database to a shared folder and kicks off the import.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+<span class="c">#$1: site grouping &amp; part 1 of ssh user (acquia standard)</span>
+<span class="c">#$2: site enviornment &amp; part 2 of ssh user (acquia standard)</span>
+<span class="c">#$3: database name</span>
+
+<span class="c">#Set up variables we will need to get data we will use these throughout the script</span>
+<span class="nv">server</span><span class="o">=</span>YOUR_REMOTE_SERVER_HOST 
+<span class="nv">site</span><span class="o">=</span><span class="nv">$1</span>
+<span class="nv">env</span><span class="o">=</span><span class="nv">$2</span>
+<span class="nv">db</span><span class="o">=</span><span class="nv">$3</span>
+<span class="c">#This is a location that our mysql docker container will have access to</span>
+<span class="nv">local_file</span><span class="o">=</span>~/mnt/db/<span class="nv">$db</span>.sql.gz
+
+<span class="c">#The names of the local files before/after decompression that our container has access to</span>
+<span class="nv">f</span><span class="o">=</span>/mnt/fs/db/<span class="nv">$db</span>.sql.gz
+<span class="nv">f2</span><span class="o">=</span>/mnt/fs/db/<span class="nv">$db</span>.sql
+
+<span class="c">#The remote acquia backup directory</span>
+<span class="nv">backup_dir</span><span class="o">=</span><span class="s2">"/mnt/files/</span><span class="nv">$site</span><span class="s2">.</span><span class="nv">$env</span><span class="s2">/backups"</span>
+
+<span class="c">#Get the name of the latest backup in the directory via ssh</span>
+<span class="nb">echo</span> <span class="s2">"finding latest backup in directory"</span>
+
+<span class="c">#The standard ssh username format for acquia we are using ssh authorized key login</span>
+<span class="nv">backup</span><span class="o">=</span><span class="k">$(</span>ssh <span class="nv">$site</span>.<span class="nv">$env</span>@<span class="nv">$server</span> <span class="s2">"ls </span><span class="nv">$backup_dir</span><span class="s2">/prod-</span><span class="nv">$db</span><span class="s2">-*.sql.gz | head -1"</span><span class="k">)</span>
+
+<span class="nb">echo</span> <span class="s2">"copying backup </span><span class="nv">$backup</span><span class="s2"> from </span><span class="nv">$site</span><span class="s2">.</span><span class="nv">$env</span><span class="s2">@</span><span class="nv">$server</span><span class="s2"> to </span><span class="nv">$local_file</span><span class="s2">"</span>
+
+<span class="c">#Remove any copies of the local files we have</span>
+rm -f <span class="nv">$local_file</span>
+
+<span class="c">#SCP standard acquia format for username </span>
+scp <span class="nv">$site</span>.<span class="nv">$env</span>@<span class="nv">$server</span>:<span class="s2">"</span><span class="nv">$backup</span><span class="s2">"</span> <span class="nv">$local_file</span>
+
+<span class="c">#Copy our database import script to the container so we can use standard containers</span>
+docker cp db_import.sh mysql-db:/usr/bin/db_import.sh
+
+<span class="c">#Run the script</span>
+docker <span class="nb">exec</span> -it mysql-db /usr/bin/db_import.sh <span class="nv">$f</span> <span class="nv">$f2</span> <span class="nv">$db</span>
+
+<span class="c">#Optional if you run a memcached with drupal it is a good idea to flush it</span>
+docker <span class="nb">exec</span> -it memcached bash -c <span class="s2">"echo 'flush_all' | nc localhost 11211"</span>
+
 </code></pre>
 </div>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="nb">alias </span>git-root<span class="o">=</span><span class="s1">'cd $(git rev-parse --show-cdup)'</span>
+<h2 id="dbimportsh">db_import.sh</h2>
+<p>Part 2 the database import script we run in the docker container<br />
+This is faster than connecting to mysql on our local computer since.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+<span class="c">#$1 gzip filename</span>
+<span class="c">#$2 .sql filename after gunzip</span>
+<span class="c">#$3 database name</span>
+
+mysql -u root -e <span class="s2">"drop database </span><span class="nv">$3</span><span class="s2">;"</span>
+mysql -u root -e <span class="s2">"CREATE DATABASE IF NOT EXISTS </span><span class="nv">$3</span><span class="s2">;"</span>
+gunzip <span class="nv">$1</span>
+<span class="nb">echo</span> <span class="s2">"running import on </span><span class="nv">$3</span><span class="s2"> for file </span><span class="nv">$2</span><span class="s2">"</span>
+mysql -u root -e <span class="s2">"use </span><span class="nv">$3</span><span class="s2">; source </span><span class="nv">$2</span><span class="s2">;"</span>
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$?</span><span class="s2">"</span> -eq 0 <span class="o">]</span>; <span class="k">then
+    </span><span class="nb">echo</span> <span class="s2">"Success"</span>
+    rm -f <span class="nv">$2</span>
+<span class="k">else
+    </span><span class="nb">echo</span> <span class="s2">"import encountered a problem please inspect the file </span><span class="nv">$2</span><span class="s2">"</span>
+<span class="k">fi</span>
 </code></pre>
 </div>
+
 </p>
-        
-          
-            <a href="/tag/bash.html">bash</a>
-          
-            <a href="/tag/git.html">git</a>
-          
         
       </article>
       <!-- Disqus comments -->

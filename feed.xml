@@ -6,35 +6,123 @@
 </description>
     <link>http://yourdomain.com/</link>
     <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 19 Feb 2016 17:25:28 +0000</pubDate>
-    <lastBuildDate>Fri, 19 Feb 2016 17:25:28 +0000</lastBuildDate>
+    <pubDate>Fri, 19 Feb 2016 17:41:17 +0000</pubDate>
+    <lastBuildDate>Fri, 19 Feb 2016 17:41:17 +0000</lastBuildDate>
     <generator>Jekyll v3.0.3</generator>
     
       <item>
-        <title>php test</title>
-        <description>&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt; 
+        <title>Refreshing Local Dev Mysql From Production Via Scp.</title>
+        <description>&lt;p&gt;This is a set of scripts I am calling gantry. These are just quick one off scripts. I plan on making these configurable&lt;br /&gt;
+with env and/or config files but they do the job.&lt;/p&gt;
 
-&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$then&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;do someething&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;something else&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;foreach&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$somethins&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$thin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;do_thing&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$thin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;p&gt;This is based on local docker development enviornment and getting the database dumps from fixed location e.g. acquia.&lt;/p&gt;
+
+&lt;p&gt;This is project I am nick naming gantry as in gantry crane&lt;/p&gt;
+
+&lt;h2 id=&quot;gantrysh&quot;&gt;gantry.sh&lt;/h2&gt;
+&lt;p&gt;Gets gets the database to a shared folder and kicks off the import.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/usr/bin/env bash&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#$1: site grouping &amp;amp; part 1 of ssh user (acquia standard)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#$2: site enviornment &amp;amp; part 2 of ssh user (acquia standard)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#$3: database name&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#Set up variables we will need to get data we will use these throughout the script&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;YOUR_REMOTE_SERVER_HOST 
+&lt;span class=&quot;nv&quot;&gt;site&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$2&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$3&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#This is a location that our mysql docker container will have access to&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;local_file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;~/mnt/db/&lt;span class=&quot;nv&quot;&gt;$db&lt;/span&gt;.sql.gz
+
+&lt;span class=&quot;c&quot;&gt;#The names of the local files before/after decompression that our container has access to&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/mnt/fs/db/&lt;span class=&quot;nv&quot;&gt;$db&lt;/span&gt;.sql.gz
+&lt;span class=&quot;nv&quot;&gt;f2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/mnt/fs/db/&lt;span class=&quot;nv&quot;&gt;$db&lt;/span&gt;.sql
+
+&lt;span class=&quot;c&quot;&gt;#The remote acquia backup directory&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;backup_dir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/mnt/files/&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$site&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$env&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/backups&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#Get the name of the latest backup in the directory via ssh&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;finding latest backup in directory&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#The standard ssh username format for acquia we are using ssh authorized key login&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;backup&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;ssh &lt;span class=&quot;nv&quot;&gt;$site&lt;/span&gt;.&lt;span class=&quot;nv&quot;&gt;$env&lt;/span&gt;@&lt;span class=&quot;nv&quot;&gt;$server&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;ls &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$backup_dir&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/prod-&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$db&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;-*.sql.gz | head -1&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;copying backup &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$backup&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; from &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$site&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$env&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$server&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; to &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$local_file&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#Remove any copies of the local files we have&lt;/span&gt;
+rm -f &lt;span class=&quot;nv&quot;&gt;$local_file&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#SCP standard acquia format for username &lt;/span&gt;
+scp &lt;span class=&quot;nv&quot;&gt;$site&lt;/span&gt;.&lt;span class=&quot;nv&quot;&gt;$env&lt;/span&gt;@&lt;span class=&quot;nv&quot;&gt;$server&lt;/span&gt;:&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$backup&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$local_file&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#Copy our database import script to the container so we can use standard containers&lt;/span&gt;
+docker cp db_import.sh mysql-db:/usr/bin/db_import.sh
+
+&lt;span class=&quot;c&quot;&gt;#Run the script&lt;/span&gt;
+docker &lt;span class=&quot;nb&quot;&gt;exec&lt;/span&gt; -it mysql-db /usr/bin/db_import.sh &lt;span class=&quot;nv&quot;&gt;$f&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$f2&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$db&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#Optional if you run a memcached with drupal it is a good idea to flush it&lt;/span&gt;
+docker &lt;span class=&quot;nb&quot;&gt;exec&lt;/span&gt; -it memcached bash -c &lt;span class=&quot;s2&quot;&gt;&quot;echo &#39;flush_all&#39; | nc localhost 11211&quot;&lt;/span&gt;
 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+
+&lt;h2 id=&quot;dbimportsh&quot;&gt;db_import.sh&lt;/h2&gt;
+&lt;p&gt;Part 2 the database import script we run in the docker container&lt;br /&gt;
+This is faster than connecting to mysql on our local computer since.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/usr/bin/env bash&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#$1 gzip filename&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#$2 .sql filename after gunzip&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#$3 database name&lt;/span&gt;
+
+mysql -u root -e &lt;span class=&quot;s2&quot;&gt;&quot;drop database &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$3&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;;&quot;&lt;/span&gt;
+mysql -u root -e &lt;span class=&quot;s2&quot;&gt;&quot;CREATE DATABASE IF NOT EXISTS &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$3&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;;&quot;&lt;/span&gt;
+gunzip &lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;running import on &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$3&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; for file &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$2&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+mysql -u root -e &lt;span class=&quot;s2&quot;&gt;&quot;use &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$3&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;; source &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$2&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$?&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; -eq 0 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;; &lt;span class=&quot;k&quot;&gt;then
+    &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Success&quot;&lt;/span&gt;
+    rm -f &lt;span class=&quot;nv&quot;&gt;$2&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;else
+    &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;import encountered a problem please inspect the file &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$2&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
 </description>
-        <pubDate>Fri, 12 Feb 2016 11:48:00 +0000</pubDate>
-        <link>http://yourdomain.com/php/2016/02/12/php-test.html</link>
-        <guid isPermaLink="true">http://yourdomain.com/php/2016/02/12/php-test.html</guid>
+        <pubDate>Fri, 19 Feb 2016 17:25:27 +0000</pubDate>
+        <link>http://yourdomain.com/mysql%20docker%20bash/2016/02/19/refreshing-local-dev-mysql-from-production-via-scp.html</link>
+        <guid isPermaLink="true">http://yourdomain.com/mysql%20docker%20bash/2016/02/19/refreshing-local-dev-mysql-from-production-via-scp.html</guid>
         
-        <category>bash</category>
-        
-        <category>patternlab</category>
+        <category>bash mysql docker devops automation acquia</category>
         
         
-        <category>php</category>
+        <category>mysql docker bash</category>
+        
+      </item>
+    
+      <item>
+        <title>Running Drush for your Drupal Docker Containers</title>
+        <description>&lt;p&gt;If you run sites in docroot or need to cd into a site directory in a multisite configuration. This is my prefered way&lt;br /&gt;
+to quickly run drush commands unless you use a wrapper similar to bowline which is an excellent option.&lt;/p&gt;
+
+&lt;p&gt;My sites typically include a docroot folder as is the standard with Acquia hosted sites/repos.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#    cmd/flag   container name        exec    wrap commands in quotes to use multi step &lt;/span&gt;
+docker &lt;span class=&quot;nb&quot;&gt;exec&lt;/span&gt; -it drupal-container-name bash -c &lt;span class=&quot;s2&quot;&gt;&quot;cd /var/www/docroot &amp;amp;&amp;amp; drush uli -l drupal.loc&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Fri, 19 Feb 2016 17:17:46 +0000</pubDate>
+        <link>http://yourdomain.com/drupal/2016/02/19/drush-docker-commands.html</link>
+        <guid isPermaLink="true">http://yourdomain.com/drupal/2016/02/19/drush-docker-commands.html</guid>
+        
+        <category>drush drupal docker bash</category>
+        
+        
+        <category>drupal</category>
         
       </item>
     
