@@ -14,6 +14,7 @@
 
   <!-- Material Design Lite css Library -->
   <link rel="stylesheet" href="https://code.getmdl.io/1.1.1/material.brown-orange.min.css" />
+  <link rel="stylesheet" href="/css/syntax.css" />
   
   <!-- Material Design Fonts -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -109,7 +110,7 @@
         <p><p>If you set up a Docker Machine on virtual box one of the things that can fix some of the pressures if you choose<br />
 to share your files via NFS is to confirm that the docker-machine has access to the files as your user</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c">#To see your exports</span>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c">#To see your exports</span>
 cat /etc/exports
 
 <span class="c">#Edit Exports</span>
@@ -119,15 +120,20 @@ sudo vi /etc/exports
 id -u 
 
 <span class="c">#Get group id</span>
-id -g </code></pre></figure>
+id -g 
+
+</code></pre>
+</div>
 
 <p>Update your /etc/hosts to look like this</p>
 
 <p>501 will be your UID<br />
 20 is your GID</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="s2">"/Users"</span> 192.168.99.100 -alldirs -mapall<span class="o">=</span>501:20</code></pre></figure>
-
+<div class="highlighter-rouge"><pre class="highlight"><code>
+<span class="s2">"/Users"</span> 192.168.99.100 -alldirs -mapall<span class="o">=</span>501:20
+</code></pre>
+</div>
 </p>
         
           

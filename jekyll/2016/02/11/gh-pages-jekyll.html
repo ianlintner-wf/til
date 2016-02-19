@@ -14,6 +14,7 @@
 
   <!-- Material Design Lite css Library -->
   <link rel="stylesheet" href="https://code.getmdl.io/1.1.1/material.brown-orange.min.css" />
+  <link rel="stylesheet" href="/css/syntax.css" />
   
   <!-- Material Design Fonts -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -109,23 +110,32 @@
         <p><p>This is my first TIL post to my new page of my Today I learned site. The basic intent is to share things I have learned<br />
 to do. Mostly technology based.</p>
 
-<p>First to create a github pages using Jekyll you have to install the Jekyll gem in Ruby. Then create gemfile.</p>
+<p>First to create a github pages using Jekyll you have to install the Jekyll gem in Ruby. Then create gemfile.<br />
+```bash</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">gem install jekyll -g
+<p>gem install jekyll -g</p>
 
-github checkout -b gh-pages
-vi Gemfile</code></pre></figure>
+<p>github checkout -b gh-pages<br />
+vi Gemfile</p>
 
-<p>Add these to your gem file</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>
+Add these to your gem file
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">source</span> <span class="s1">'https://rubygems.org'</span>
+```bash
+source 'https://rubygems.org'
 
-gem <span class="s1">'github-pages'</span></code></pre></figure>
+gem 'github-pages'
+</code></pre>
+</div>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">bundle install
+<div class="highlighter-rouge"><pre class="highlight"><code>
+bundle install
 
 <span class="c">#To start your site on http://127.0.0.1:4000</span>
-jekyll serve .</code></pre></figure>
+jekyll serve .
+
+</code></pre>
+</div>
 </p>
         
           
