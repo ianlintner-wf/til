@@ -15,7 +15,7 @@ task :deploy do
     system "git commit -m \"#{message}\""
 
     puts "## Pushing generated site"
-    system "git push"
+    system "git -q push"
 
     puts "## Deploy Complete!"
   end
