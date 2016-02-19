@@ -12,10 +12,10 @@ task :deploy do
 
     message = "Site updated at #{Time.now.utc}"
     puts "## Commiting: #{message}"
-    system "git commit -m \"#{message}\""
+    system "git commit -m \"#{message}\" >> /dev/null"
 
     puts "## Pushing generated site"
-    system "git -q push"
+    system "git push --quiet >> /dev/null"
 
     puts "## Deploy Complete!"
   end
