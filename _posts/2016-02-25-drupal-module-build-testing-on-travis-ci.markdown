@@ -5,7 +5,10 @@ date: 2016-02-25 21:35:45
 categories: 
 - drupal
 tags: 
-- drupal devops travisci testing
+- drupal
+- devops 
+- travisci
+- testing
 
 
 ---
