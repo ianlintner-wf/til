@@ -6,9 +6,77 @@
 </description>
     <link>http://yourdomain.com/</link>
     <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 19 Feb 2016 18:03:30 +0000</pubDate>
-    <lastBuildDate>Fri, 19 Feb 2016 18:03:30 +0000</lastBuildDate>
+    <pubDate>Thu, 25 Feb 2016 21:40:36 +0000</pubDate>
+    <lastBuildDate>Thu, 25 Feb 2016 21:40:36 +0000</lastBuildDate>
     <generator>Jekyll v3.0.3</generator>
+    
+      <item>
+        <title>Drupal Module Build &amp; Testing On Travis-Ci</title>
+        <description>&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;s&quot;&gt;language&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;php&lt;/span&gt;
+
+&lt;span class=&quot;s&quot;&gt;php&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;5.3&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;5.4&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;5.5&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;5.6&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;hhvm&lt;/span&gt;
+
+&lt;span class=&quot;s&quot;&gt;matrix&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;fast_finish&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;true&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;allow_failures&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;php&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;hhvm&lt;/span&gt;
+
+&lt;span class=&quot;s&quot;&gt;mysql&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;database&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;travis_ci_drupal_module_example_test&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;username&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;root&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;encoding&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;utf8&lt;/span&gt;
+
+&lt;span class=&quot;s&quot;&gt;before_install&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;sudo apt-get update &amp;gt; /dev/null&lt;/span&gt;
+
+&lt;span class=&quot;s&quot;&gt;install&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# install php packages required for running a web server from drush on php 5.3&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;sudo apt-get install -y --force-yes php5-cgi php5-mysql&lt;/span&gt;
+
+  &lt;span class=&quot;c1&quot;&gt;# add composer&#39;s global bin directory to the path&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# see: https://github.com/drush-ops/drush#install---composer&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;export PATH=&quot;$HOME/.composer/vendor/bin:$PATH&quot;&lt;/span&gt;
+
+  &lt;span class=&quot;c1&quot;&gt;# install drush globally&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;composer global require drush/drush:6.*&lt;/span&gt;
+
+&lt;span class=&quot;s&quot;&gt;before_script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# navigate out of module directory to prevent blown stack by recursive module lookup&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;cd ../..&lt;/span&gt;
+
+  &lt;span class=&quot;c1&quot;&gt;# create new site, stubbing sendmail path with true to prevent delivery errors and manually resolving drush path&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mysql -e &#39;create database travis_ci_drupal_module_example_test&#39;&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;php -d sendmail_path=`which true` ~/.composer/vendor/bin/drush.php --yes core-quick-drupal --profile=testing --no-server --db-url=mysql://root:@127.0.0.1/travis_ci_drupal_module_example_test --enable=simpletest travis_ci_drupal_module_example_test&lt;/span&gt;
+
+  &lt;span class=&quot;c1&quot;&gt;# reference and enable travis_ci_drupal_module_example in build site&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ln -s $(readlink -e $(cd -)) travis_ci_drupal_module_example_test/drupal/sites/all/modules/travis_ci_drupal_module_example&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;cd travis_ci_drupal_module_example_test/drupal&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;drush --yes pm-enable travis_ci_drupal_module_example&lt;/span&gt;
+
+  &lt;span class=&quot;c1&quot;&gt;# start a web server on port 8080, run in the background; wait for initialization&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;drush runserver 127.0.0.1:8080 &amp;amp;&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;until netstat -an 2&amp;gt;/dev/null | grep &#39;8080.*LISTEN&#39;; do true; done&lt;/span&gt;
+
+&lt;span class=&quot;s&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;drush test-run &#39;Travis-CI Drupal Module Example&#39; --uri=http://127.0.0.1:8080&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Thu, 25 Feb 2016 21:35:45 +0000</pubDate>
+        <link>http://yourdomain.com/drupal/2016/02/25/drupal-module-build-testing-on-travis-ci.html</link>
+        <guid isPermaLink="true">http://yourdomain.com/drupal/2016/02/25/drupal-module-build-testing-on-travis-ci.html</guid>
+        
+        <category>drupal devops travisci testing</category>
+        
+        
+        <category>drupal</category>
+        
+      </item>
     
       <item>
         <title>Refreshing Local Dev Mysql From Production Via Scp.</title>

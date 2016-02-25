@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>TIL for Ian Lintner</title>
-  <meta name="description" content="This is the TIL site for Ian Lintner [https://github.com/ianlintner]
-">
+  <title>Drupal Module Build & Testing On Travis-Ci</title>
+  <meta name="description" content="```yamllanguage: php">
 
-  <link rel="canonical" href="http://yourdomain.com/tag/devops.html">
+  <link rel="canonical" href="http://yourdomain.com/drupal/2016/02/25/drupal-module-build-testing-on-travis-ci.html">
   <link rel="alternate" type="application/rss+xml" title="TIL for Ian Lintner" href="http://yourdomain.com/feed.xml" />
 
   <!-- Material Design Lite css Library -->
@@ -112,46 +111,78 @@
 
     
 
-    <div class="page-content">
-    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-desktop mdl-cell--12-col-tablet  mdl-cell--12-col-phone" style="padding-left: .5rem;">
-        <h4>Articles by tag: devops</h4>
-    </div>
-    <div class="mdl-grid">
+    <div class="post-ribbon"></div>
+<main class="post-main mdl-layout__content">
+  <div class="post-container mdl-grid">
+    <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+    <div class="post-section mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
+      <div class="mdl-color-text--grey-500">
+      Feb 25, 2016
+      </div>
+      <h3>Drupal Module Build & Testing On Travis-Ci</h3>
+      <article class="post-content">
+        <p><div class="highlighter-rouge"><pre class="highlight"><code><span class="s">language</span><span class="pi">:</span> <span class="s">php</span>
 
-        
+<span class="s">php</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">5.3</span>
+  <span class="pi">-</span> <span class="s">5.4</span>
+  <span class="pi">-</span> <span class="s">5.5</span>
+  <span class="pi">-</span> <span class="s">5.6</span>
+  <span class="pi">-</span> <span class="s">hhvm</span>
 
-        <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--6-col-desktop mdl-cell--6-col-tablet  mdl-cell--12-col-phone">
-            <div class="mdl-card__title" >
-                <h2 class="mdl-card__title-text"><a href="/mysql/docker/bash/2016/02/19/refreshing-local-dev-mysql-from-production-via-scp.html">Refreshing Local Dev Mysql From Production Via Scp.</a></h2>
-            </div>
-            <div class="mdl-card__supporting-text">
-                <span>Feb 19, 2016</span>
-                <p><p>This is a set of scripts I am calling gantry. These are just quick one off scripts. I plan on making these configurable<br />
-with env and/or config files but they do the job.</p>
+<span class="s">matrix</span><span class="pi">:</span>
+  <span class="s">fast_finish</span><span class="pi">:</span> <span class="s">true</span>
+  <span class="s">allow_failures</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">php</span><span class="pi">:</span> <span class="s">hhvm</span>
 
-</p>
-            </div>
-            <div class="mdl-card__actions mdl-card--border">
-                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/mysql/docker/bash/2016/02/19/refreshing-local-dev-mysql-from-production-via-scp.html">
-                    Read More
-                </a>
-            </div>
-            <div class="mdl-card__menu">
-                <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" id="post-/mysql/docker/bash/2016/02/19/refreshing-local-dev-mysql-from-production-via-scp">
-                    <i class="material-icons">share</i>
-                </button>
-                <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="post-/mysql/docker/bash/2016/02/19/refreshing-local-dev-mysql-from-production-via-scp">
-                    <li><a href="https://www.facebook.com/dialog/share?app_id=&display=page&href=/mysql/docker/bash/2016/02/19/refreshing-local-dev-mysql-from-production-via-scp.html&redirect_uri=" class="mdl-menu__item">Facebook</a></li>
-                    <li><a href="https://twitter.com/share?url=/mysql/docker/bash/2016/02/19/refreshing-local-dev-mysql-from-production-via-scp.html&text=Refreshing Local Dev Mysql From Production Via Scp.&via=" class="mdl-menu__item">Twitter</a></li>
-                    <li><a href="https://plus.google.com/share?url=/mysql/docker/bash/2016/02/19/refreshing-local-dev-mysql-from-production-via-scp.html" class="mdl-menu__item">Google+</a></li>
-                </ul>
-            </div>
-        </div>
+<span class="s">mysql</span><span class="pi">:</span>
+  <span class="s">database</span><span class="pi">:</span> <span class="s">travis_ci_drupal_module_example_test</span>
+  <span class="s">username</span><span class="pi">:</span> <span class="s">root</span>
+  <span class="s">encoding</span><span class="pi">:</span> <span class="s">utf8</span>
 
-        
+<span class="s">before_install</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">sudo apt-get update &gt; /dev/null</span>
 
-    </div>
+<span class="s">install</span><span class="pi">:</span>
+  <span class="c1"># install php packages required for running a web server from drush on php 5.3</span>
+  <span class="pi">-</span> <span class="s">sudo apt-get install -y --force-yes php5-cgi php5-mysql</span>
+
+  <span class="c1"># add composer's global bin directory to the path</span>
+  <span class="c1"># see: https://github.com/drush-ops/drush#install---composer</span>
+  <span class="pi">-</span> <span class="s">export PATH="$HOME/.composer/vendor/bin:$PATH"</span>
+
+  <span class="c1"># install drush globally</span>
+  <span class="pi">-</span> <span class="s">composer global require drush/drush:6.*</span>
+
+<span class="s">before_script</span><span class="pi">:</span>
+  <span class="c1"># navigate out of module directory to prevent blown stack by recursive module lookup</span>
+  <span class="pi">-</span> <span class="s">cd ../..</span>
+
+  <span class="c1"># create new site, stubbing sendmail path with true to prevent delivery errors and manually resolving drush path</span>
+  <span class="pi">-</span> <span class="s">mysql -e 'create database travis_ci_drupal_module_example_test'</span>
+  <span class="pi">-</span> <span class="s">php -d sendmail_path=`which true` ~/.composer/vendor/bin/drush.php --yes core-quick-drupal --profile=testing --no-server --db-url=mysql://root:@127.0.0.1/travis_ci_drupal_module_example_test --enable=simpletest travis_ci_drupal_module_example_test</span>
+
+  <span class="c1"># reference and enable travis_ci_drupal_module_example in build site</span>
+  <span class="pi">-</span> <span class="s">ln -s $(readlink -e $(cd -)) travis_ci_drupal_module_example_test/drupal/sites/all/modules/travis_ci_drupal_module_example</span>
+  <span class="pi">-</span> <span class="s">cd travis_ci_drupal_module_example_test/drupal</span>
+  <span class="pi">-</span> <span class="s">drush --yes pm-enable travis_ci_drupal_module_example</span>
+
+  <span class="c1"># start a web server on port 8080, run in the background; wait for initialization</span>
+  <span class="pi">-</span> <span class="s">drush runserver 127.0.0.1:8080 &amp;</span>
+  <span class="pi">-</span> <span class="s">until netstat -an 2&gt;/dev/null | grep '8080.*LISTEN'; do true; done</span>
+
+<span class="s">script</span><span class="pi">:</span> <span class="s">drush test-run 'Travis-CI Drupal Module Example' --uri=http://127.0.0.1:8080</span>
+
+</code></pre>
 </div>
+</p>
+        
+      </article>
+      <!-- Disqus comments -->
+      
+    </div>
+  </div>
+</main>
 
     <footer class="mdl-mega-footer">
   <div class="mdl-mega-footer--middle-section">
