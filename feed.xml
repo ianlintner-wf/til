@@ -6,8 +6,8 @@
 </description>
     <link>http://yourdomain.com/</link>
     <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 25 Feb 2016 21:40:36 +0000</pubDate>
-    <lastBuildDate>Thu, 25 Feb 2016 21:40:36 +0000</lastBuildDate>
+    <pubDate>Thu, 25 Feb 2016 22:05:46 +0000</pubDate>
+    <lastBuildDate>Thu, 25 Feb 2016 22:05:46 +0000</lastBuildDate>
     <generator>Jekyll v3.0.3</generator>
     
       <item>
@@ -71,7 +71,13 @@
         <link>http://yourdomain.com/drupal/2016/02/25/drupal-module-build-testing-on-travis-ci.html</link>
         <guid isPermaLink="true">http://yourdomain.com/drupal/2016/02/25/drupal-module-build-testing-on-travis-ci.html</guid>
         
-        <category>drupal devops travisci testing</category>
+        <category>drupal</category>
+        
+        <category>devops</category>
+        
+        <category>travisci</category>
+        
+        <category>testing</category>
         
         
         <category>drupal</category>
