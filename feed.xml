@@ -6,9 +6,67 @@
 </description>
     <link>http://yourdomain.com/</link>
     <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 11 Mar 2016 03:41:01 +0000</pubDate>
-    <lastBuildDate>Fri, 11 Mar 2016 03:41:01 +0000</lastBuildDate>
+    <pubDate>Wed, 23 Mar 2016 21:55:03 +0000</pubDate>
+    <lastBuildDate>Wed, 23 Mar 2016 21:55:03 +0000</lastBuildDate>
     <generator>Jekyll v3.0.3</generator>
+    
+      <item>
+        <title>Writing Drupal Caching Code The Right Way</title>
+        <description>&lt;p&gt;Below is an example of how to do caching in Drupal with a static variable.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/**
+* This is an example function to demonstrate effective caching in drupal.
+**/
+function example_module_get_cached_data() {
+  // Initialise the a static variable.
+  // Static variable is added speed boost if this call is made more than once during the execution. 
+  static $example_data;
+
+  // Set a cache ID to store and retrieve the cache.
+  $cache_id = &#39;example_module_data&#39;;
+
+  // Try to retrieve from static cache.
+  $example_data = &lt;span class=&quot;ni&quot;&gt;&amp;amp;drupal_static($cache_id);&lt;/span&gt;
+
+  // Test to see if the variable is empty and via overload then do the cache get.
+  if (empty($example_data) &lt;span class=&quot;err&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; $cache = cache_get($cache_id)) {
+    $example_data = $cache-&amp;gt;data;
+  }
+
+  // Check if there was a result this is important to do again.
+  if (empty($example_data)) {
+    // Do expensive operation if variable is not available.
+    $example_data = example_expensive_call();
+    
+    // Cache the output with the cache_id (CACHE_TEMPORARY to signify that it can be removed on cache clear).
+    // You can use other flags as well, depending on the use case
+    cache_set($cache_id, $example_data, &#39;cache&#39;, CACHE_TEMPORARY);
+  }
+  return $example_data;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Wed, 23 Mar 2016 21:32:18 +0000</pubDate>
+        <link>http://yourdomain.com/drupal/caching/php/2016/03/23/writing-drupal-caching-code-the-right-way.html</link>
+        <guid isPermaLink="true">http://yourdomain.com/drupal/caching/php/2016/03/23/writing-drupal-caching-code-the-right-way.html</guid>
+        
+        <category>Drupal</category>
+        
+        <category>Caching</category>
+        
+        <category>PHP</category>
+        
+        <category>Performance</category>
+        
+        
+        <category>Drupal</category>
+        
+        <category>Caching</category>
+        
+        <category>PHP</category>
+        
+      </item>
     
       <item>
         <title>Docker Stats All Containers</title>
@@ -392,49 +450,6 @@ jekyll serve .
         
         
         <category>jekyll</category>
-        
-      </item>
-    
-      <item>
-        <title>Docker-Machine NFS Share Permissions on Mac OSX</title>
-        <description>&lt;p&gt;If you set up a Docker Machine on virtual box one of the things that can fix some of the pressures if you choose&lt;br /&gt;
-to share your files via NFS is to confirm that the docker-machine has access to the files as your user&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#To see your exports&lt;/span&gt;
-cat /etc/exports
-
-&lt;span class=&quot;c&quot;&gt;#Edit Exports&lt;/span&gt;
-sudo vi /etc/exports
-
-&lt;span class=&quot;c&quot;&gt;#Get user id&lt;/span&gt;
-id -u 
-
-&lt;span class=&quot;c&quot;&gt;#Get group id&lt;/span&gt;
-id -g 
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Update your /etc/hosts to look like this&lt;/p&gt;
-
-&lt;p&gt;501 will be your UID&lt;br /&gt;
-20 is your GID&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-&lt;span class=&quot;s2&quot;&gt;&quot;/Users&quot;&lt;/span&gt; 192.168.99.100 -alldirs -mapall&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;501:20
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Thu, 11 Feb 2016 09:00:20 +0000</pubDate>
-        <link>http://yourdomain.com/docker/2016/02/11/docker-machine-nfs-export.html</link>
-        <guid isPermaLink="true">http://yourdomain.com/docker/2016/02/11/docker-machine-nfs-export.html</guid>
-        
-        <category>docker-machine</category>
-        
-        <category>docker</category>
-        
-        
-        <category>docker</category>
         
       </item>
     

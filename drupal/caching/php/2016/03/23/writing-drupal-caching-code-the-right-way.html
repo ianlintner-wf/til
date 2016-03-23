@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>TIL for Ian Lintner</title>
-  <meta name="description" content="This is the TIL site for Ian Lintner [https://github.com/ianlintner]
-">
+  <title>Writing Drupal Caching Code The Right Way</title>
+  <meta name="description" content="Below is an example of how to do caching in Drupal with a static variable.">
 
-  <link rel="canonical" href="http://yourdomain.com/tag/testing.html">
+  <link rel="canonical" href="http://yourdomain.com/drupal/caching/php/2016/03/23/writing-drupal-caching-code-the-right-way.html">
   <link rel="alternate" type="application/rss+xml" title="TIL for Ian Lintner" href="http://yourdomain.com/feed.xml" />
 
   <!-- Material Design Lite css Library -->
@@ -123,46 +122,58 @@
 
     
 
-    <div class="page-content">
-    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-desktop mdl-cell--12-col-tablet  mdl-cell--12-col-phone" style="padding-left: .5rem;">
-        <h4>Articles by tag: testing</h4>
-    </div>
-    <div class="mdl-grid">
+    <div class="post-ribbon"></div>
+<main class="post-main mdl-layout__content">
+  <div class="post-container mdl-grid">
+    <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+    <div class="post-section mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
+      <div class="mdl-color-text--grey-500">
+      Mar 23, 2016
+      </div>
+      <h3>Writing Drupal Caching Code The Right Way</h3>
+      <article class="post-content">
+        <p><p>Below is an example of how to do caching in Drupal with a static variable.</p>
 
-        
+<div class="highlighter-rouge"><pre class="highlight"><code>/**
+* This is an example function to demonstrate effective caching in drupal.
+**/
+function example_module_get_cached_data() {
+  // Initialise the a static variable.
+  // Static variable is added speed boost if this call is made more than once during the execution. 
+  static $example_data;
 
-        <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--6-col-desktop mdl-cell--6-col-tablet  mdl-cell--12-col-phone">
-            <div class="mdl-card__title" >
-                <h2 class="mdl-card__title-text"><a href="/drupal/2016/02/25/drupal-module-build-testing-on-travis-ci.html">Drupal Module Build & Testing On Travis-Ci</a></h2>
-            </div>
-            <div class="mdl-card__supporting-text">
-                <span>Feb 25, 2016</span>
-                <p><p>```yaml<br />
-language: php</p>
+  // Set a cache ID to store and retrieve the cache.
+  $cache_id = 'example_module_data';
 
-</p>
-            </div>
-            <div class="mdl-card__actions mdl-card--border">
-                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/drupal/2016/02/25/drupal-module-build-testing-on-travis-ci.html">
-                    Read More
-                </a>
-            </div>
-            <div class="mdl-card__menu">
-                <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" id="post-/drupal/2016/02/25/drupal-module-build-testing-on-travis-ci">
-                    <i class="material-icons">share</i>
-                </button>
-                <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="post-/drupal/2016/02/25/drupal-module-build-testing-on-travis-ci">
-                    <li><a href="https://www.facebook.com/dialog/share?app_id=&display=page&href=/drupal/2016/02/25/drupal-module-build-testing-on-travis-ci.html&redirect_uri=" class="mdl-menu__item">Facebook</a></li>
-                    <li><a href="https://twitter.com/share?url=/drupal/2016/02/25/drupal-module-build-testing-on-travis-ci.html&text=Drupal Module Build & Testing On Travis-Ci&via=" class="mdl-menu__item">Twitter</a></li>
-                    <li><a href="https://plus.google.com/share?url=/drupal/2016/02/25/drupal-module-build-testing-on-travis-ci.html" class="mdl-menu__item">Google+</a></li>
-                </ul>
-            </div>
-        </div>
+  // Try to retrieve from static cache.
+  $example_data = <span class="ni">&amp;drupal_static($cache_id);</span>
 
-        
+  // Test to see if the variable is empty and via overload then do the cache get.
+  if (empty($example_data) <span class="err">&amp;&amp;</span> $cache = cache_get($cache_id)) {
+    $example_data = $cache-&gt;data;
+  }
 
-    </div>
+  // Check if there was a result this is important to do again.
+  if (empty($example_data)) {
+    // Do expensive operation if variable is not available.
+    $example_data = example_expensive_call();
+    
+    // Cache the output with the cache_id (CACHE_TEMPORARY to signify that it can be removed on cache clear).
+    // You can use other flags as well, depending on the use case
+    cache_set($cache_id, $example_data, 'cache', CACHE_TEMPORARY);
+  }
+  return $example_data;
+}
+</code></pre>
 </div>
+</p>
+        
+      </article>
+      <!-- Disqus comments -->
+      
+    </div>
+  </div>
+</main>
 
     <footer class="mdl-mega-footer">
   <div class="mdl-mega-footer--middle-section">
