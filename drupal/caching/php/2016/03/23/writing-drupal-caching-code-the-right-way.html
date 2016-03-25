@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Writing Drupal Caching Code The Right Way</title>
-  <meta name="description" content="Below is an example of how to do caching in Drupal with a static variable.">
+  <meta name="description" content="Two examples first is basic caching function, the second is using static cache.">
 
   <link rel="canonical" href="http://yourdomain.com/drupal/caching/php/2016/03/23/writing-drupal-caching-code-the-right-way.html">
   <link rel="alternate" type="application/rss+xml" title="TIL for Ian Lintner" href="http://yourdomain.com/feed.xml" />
@@ -132,24 +132,20 @@
       </div>
       <h3>Writing Drupal Caching Code The Right Way</h3>
       <article class="post-content">
-        <p><p>Below is an example of how to do caching in Drupal with a static variable.</p>
+        <p><p>Two examples first is basic caching function, the second is using static cache.</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>/**
+<pre><code class="language-PHP">
+/**
 * This is an example function to demonstrate effective caching in drupal.
 **/
 function example_module_get_cached_data() {
-  // Initialise the a static variable.
-  // Static variable is added speed boost if this call is made more than once during the execution. 
-  static $example_data;
-
   // Set a cache ID to store and retrieve the cache.
   $cache_id = 'example_module_data';
 
-  // Try to retrieve from static cache.
-  $example_data = <span class="ni">&amp;drupal_static($cache_id);</span>
+  $example_data = null;
 
   // Test to see if the variable is empty and via overload then do the cache get.
-  if (empty($example_data) <span class="err">&amp;&amp;</span> $cache = cache_get($cache_id)) {
+  if ($cache = cache_get($cache_id)) {
     $example_data = $cache-&gt;data;
   }
 
@@ -165,7 +161,37 @@ function example_module_get_cached_data() {
   return $example_data;
 }
 </code></pre>
-</div>
+
+<p>Below is an example of how to do caching in Drupal using static cache.</p>
+
+<pre><code class="language-PHP">
+/**
+* This is an example function to demonstrate effective caching in drupal.
+**/
+function example_module_get_cached_data() {
+  // Set a cache ID to store and retrieve the cache.
+  $cache_id = 'example_module_data';
+
+  // Try to retrieve from static cache.
+  $example_data = &amp;drupal_static($cache_id);
+
+  // Test to see if the variable is empty and via overload then do the cache get.
+  if (empty($example_data) &amp;&amp; $cache = cache_get($cache_id)) {
+    $example_data = $cache-&gt;data;
+  }
+
+  // Check if there was a result this is important to do again.
+  if (empty($example_data)) {
+    // Do expensive operation if variable is not available.
+    $example_data = example_expensive_call();
+    
+    // Cache the output with the cache_id (CACHE_TEMPORARY to signify that it can be removed on cache clear).
+    // You can use other flags as well, depending on the use case
+    cache_set($cache_id, $example_data, 'cache', CACHE_TEMPORARY);
+  }
+  return $example_data;
+}
+</code></pre>
 </p>
         
       </article>
